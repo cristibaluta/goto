@@ -118,7 +118,11 @@ if let command = Command(rawValue: commandStr) {
                 print("  \(key) -> \(value)")
             }
         case .open:
-            _ = bash(command: "open", arguments: ["."])
+            let projectName = arguments.remove(at: 0)
+            let projects = readPlist()
+            if let path = projects[projectName] {
+                _ = bash(command: "open", arguments: [path])
+            }
     }
 } else {
     // No command found, means the argument is a project name, so switch to it
