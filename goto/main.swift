@@ -123,17 +123,17 @@ if let command = Command(rawValue: commandStr) {
             }
         case .terminal:
             let projectName = arguments.remove(at: 0)
-            if let projectPath = readPlist()[projectName] {
-                print("Switching to project '\(projectName)' at path '\(projectPath)'")
-                _ = bash(command: "osascript", arguments: ["-e", "tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down", "-e", "tell application \"Terminal\" to do script \"cd \(projectPath)\" in front window"])
+            if let path = readPlist()[projectName] {
+                print("Go to path '\(path)'")
+                _ = bash(command: "osascript", arguments: ["-e", "tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down", "-e", "tell application \"Terminal\" to do script \"cd '\(path)'\" in front window"])
             }
     }
 } else {
     // No command found, means the argument is a project name, so switch to it
     let projectName = commandStr
-    if let projectPath = readPlist()[projectName] {
-        print("Switching to project '\(projectName)' at path '\(projectPath)'")
-        _ = bash(command: "osascript", arguments: ["-e", "tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down", "-e", "tell application \"Terminal\" to do script \"cd \(projectPath)\" in front window"])
+    if let path = readPlist()[projectName] {
+        print("Go to path '\(path)'")
+        _ = bash(command: "osascript", arguments: ["-e", "tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down", "-e", "tell application \"Terminal\" to do script \"cd '\(path)'\" in front window"])
     }
 }
 
