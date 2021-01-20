@@ -1,4 +1,4 @@
-# Projects Manager
+# goto
 
 A macOS cmd to open Terminal tabs and Finder windows to various locations on your computer. 
 
@@ -8,10 +8,13 @@ A macOS cmd to open Terminal tabs and Finder windows to various locations on you
     
 
 ## Commands:
-     list            List all projects
-     set <name>      Create/Update a project named <name> with the path to current directory
-     delete <name>   Delete the project from Projects Manager
-     open <name>     Open Finder at the project's directory
+     list            List all paths
+     set <name>      Assign a name to current directory path
+     delete <name>   Delete the path with name
+     finder <name>   Open new Finder window at path
+     terminal <name> Open new Terminal tab at path
+     <name>          Open new Terminal tab at path
 
 ## Install:
-Get the build/pm and place it in usr/local/bin
+1. Get the build/goto and place it in usr/local/bin
+2. Build the xcode project

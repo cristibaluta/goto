@@ -23,7 +23,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2811197824AF18DA00A014D6 /* pm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pm; sourceTree = BUILT_PRODUCTS_DIR; };
+		2811197824AF18DA00A014D6 /* goto */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = goto; sourceTree = BUILT_PRODUCTS_DIR; };
 		2811197B24AF18DA00A014D6 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -41,7 +41,7 @@
 		2811196F24AF18DA00A014D6 = {
 			isa = PBXGroup;
 			children = (
-				2811197A24AF18DA00A014D6 /* Projects Manager */,
+				2811197A24AF18DA00A014D6 /* goto */,
 				2811197924AF18DA00A014D6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,25 +49,25 @@
 		2811197924AF18DA00A014D6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2811197824AF18DA00A014D6 /* pm */,
+				2811197824AF18DA00A014D6 /* goto */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2811197A24AF18DA00A014D6 /* Projects Manager */ = {
+		2811197A24AF18DA00A014D6 /* goto */ = {
 			isa = PBXGroup;
 			children = (
 				2811197B24AF18DA00A014D6 /* main.swift */,
 			);
-			path = "Projects Manager";
+			path = goto;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2811197724AF18DA00A014D6 /* pm */ = {
+		2811197724AF18DA00A014D6 /* goto */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2811197F24AF18DA00A014D6 /* Build configuration list for PBXNativeTarget "pm" */;
+			buildConfigurationList = 2811197F24AF18DA00A014D6 /* Build configuration list for PBXNativeTarget "goto" */;
 			buildPhases = (
 				2811197424AF18DA00A014D6 /* Sources */,
 				2811197524AF18DA00A014D6 /* Frameworks */,
@@ -77,11 +77,11 @@
 			);
 			dependencies = (
 			);
-			name = pm;
+			name = goto;
 			packageProductDependencies = (
 			);
 			productName = "Projects Manager";
-			productReference = 2811197824AF18DA00A014D6 /* pm */;
+			productReference = 2811197824AF18DA00A014D6 /* goto */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -98,7 +98,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2811197324AF18DA00A014D6 /* Build configuration list for PBXProject "Projects Manager" */;
+			buildConfigurationList = 2811197324AF18DA00A014D6 /* Build configuration list for PBXProject "goto" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -113,7 +113,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2811197724AF18DA00A014D6 /* pm */,
+				2811197724AF18DA00A014D6 /* goto */,
 			);
 		};
 /* End PBXProject section */
@@ -272,7 +272,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2811197324AF18DA00A014D6 /* Build configuration list for PBXProject "Projects Manager" */ = {
+		2811197324AF18DA00A014D6 /* Build configuration list for PBXProject "goto" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2811197D24AF18DA00A014D6 /* Debug */,
@@ -281,7 +281,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2811197F24AF18DA00A014D6 /* Build configuration list for PBXNativeTarget "pm" */ = {
+		2811197F24AF18DA00A014D6 /* Build configuration list for PBXNativeTarget "goto" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2811198024AF18DA00A014D6 /* Debug */,

@@ -1,37 +1,35 @@
 //
-//  main.swift
-//  Projects Manager
-//
 //  Created by Cristian Baluta on 03/07/2020.
 //
 
 import Foundation
 
-var shouldKeepRunning = true
-let theRL = RunLoop.current
 let appVersion = "21.01.20"
 
 enum Command: String {
+    case list = "list"
     case set = "set"
     case delete = "delete"
-    case list = "list"
-    case open = "open"
+    case terminal = "terminal"
+    case finder = "finder"
 }
 
 func printHelp() {
     print("")
-    print("Projects Manager \(appVersion) - (c)2021 Imagin soft")
+    print("goto \(appVersion) - (c)2021 Imagin soft")
     print("")
     print("Usage:")
-    print("     list            List all projects")
-    print("     set <name>      Create/Update a project named <name> with the path to current directory")
-    print("     delete <name>   Delete the project from Projects Manager")
-    print("     open <name>     Open Finder at the project's directory")
+    print("     list            List all paths")
+    print("     set <name>      Assign a name to current directory path")
+    print("     delete <name>   Delete the path with name")
+    print("     finder <name>   Open new Finder window at path")
+    print("     terminal <name> Open new Terminal tab at path")
+    print("     <name>          Open new Terminal tab at path")
     print("")
 }
 
 let applicationSupportDirectory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-let plistPath = applicationSupportDirectory.appendingPathComponent("com.cristibaluta.projectsmanager")
+let plistPath = applicationSupportDirectory.appendingPathComponent("com.cristibaluta.goto")
     .appendingPathExtension("plist")
 var arguments = ProcessInfo.processInfo.arguments
 
@@ -117,11 +115,17 @@ if let command = Command(rawValue: commandStr) {
             for (key, value) in readPlist() {
                 print("  \(key) -> \(value)")
             }
-        case .open:
+        case .finder:
             let projectName = arguments.remove(at: 0)
             let projects = readPlist()
             if let path = projects[projectName] {
                 _ = bash(command: "open", arguments: [path])
+            }
+        case .terminal:
+            let projectName = arguments.remove(at: 0)
+            if let projectPath = readPlist()[projectName] {
+                print("Switching to project '\(projectName)' at path '\(projectPath)'")
+                _ = bash(command: "osascript", arguments: ["-e", "tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down", "-e", "tell application \"Terminal\" to do script \"cd \(projectPath)\" in front window"])
             }
     }
 } else {
