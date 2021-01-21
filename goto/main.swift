@@ -4,7 +4,7 @@
 
 import Foundation
 
-let appVersion = "21.01.20"
+let appVersion = "21.01.21"
 
 enum Command: String {
     case list = "list"
@@ -12,19 +12,21 @@ enum Command: String {
     case delete = "delete"
     case terminal = "terminal"
     case finder = "finder"
+    case file = "file"
 }
 
 func printHelp() {
     print("")
-    print("goto \(appVersion) - (c)2021 Imagin soft")
+    print("goto \(appVersion) - (c)2021 Imagin Soft")
     print("")
     print("Usage:")
-    print("     list            List all paths")
-    print("     set <name>      Assign a name to current directory path")
-    print("     delete <name>   Delete the path with name")
-    print("     finder <name>   Open new Finder window at path")
-    print("     terminal <name> Open new Terminal tab at path")
-    print("     <name>          Open new Terminal tab at path")
+    print("     list               List all paths")
+    print("     set <name> [path]  Assign a name to the path. If path is missing use current directory")
+    print("     delete <name>      Delete the path with name")
+    print("     finder <name>      Open new Finder window at path")
+    print("     terminal <name>    Open new Terminal tab at path")
+    print("     <name>             Open new Terminal tab or file at path")
+    print("     file <name>        Open file at path")
     print("")
 }
 
@@ -86,6 +88,15 @@ func readPlist() -> [String: String] {
     return plistData
 }
 
+func openTerminal (_ path: String) {
+    print("Go to path '\(path)'")
+    _ = bash(command: "osascript", arguments: ["-e", "tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down", "-e", "tell application \"Terminal\" to do script \"cd '\(path)'\" in front window"])
+}
+
+func openDir (_ path: String) {
+    _ = bash(command: "open", arguments: [path])
+}
+
 func savePlist (_ plistData: [String: String]) {
     do {
         let encoder = PropertyListEncoder()
@@ -104,7 +115,11 @@ if let command = Command(rawValue: commandStr) {
             let cwd = FileManager.default.currentDirectoryPath
             let projectName = arguments.remove(at: 0)
             var projects = readPlist()
-            projects[projectName] = cwd
+            if let path = arguments.first {
+                projects[projectName] = path
+            } else {
+                projects[projectName] = cwd
+            }
             savePlist(projects)
         case .delete:
             let projectName = arguments.remove(at: 0)
@@ -115,25 +130,37 @@ if let command = Command(rawValue: commandStr) {
             for (key, value) in readPlist() {
                 print("  \(key) -> \(value)")
             }
-        case .finder:
+        case .finder, .file:
             let projectName = arguments.remove(at: 0)
-            let projects = readPlist()
-            if let path = projects[projectName] {
-                _ = bash(command: "open", arguments: [path])
+            if let path = readPlist()[projectName] {
+                openDir(path)
+            } else {
+                print("Path doesn't exist")
             }
         case .terminal:
             let projectName = arguments.remove(at: 0)
             if let path = readPlist()[projectName] {
-                print("Go to path '\(path)'")
-                _ = bash(command: "osascript", arguments: ["-e", "tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down", "-e", "tell application \"Terminal\" to do script \"cd '\(path)'\" in front window"])
+                openTerminal(path)
+            } else {
+                print("Path doesn't exist")
             }
     }
 } else {
-    // No command found, means the argument is a project name, so switch to it
-    let projectName = commandStr
+    // No command found, analyze if the path is a folder or file
+    let projectName = arguments.remove(at: 0)
     if let path = readPlist()[projectName] {
-        print("Go to path '\(path)'")
-        _ = bash(command: "osascript", arguments: ["-e", "tell application \"System Events\" to tell process \"Terminal\" to keystroke \"t\" using command down", "-e", "tell application \"Terminal\" to do script \"cd '\(path)'\" in front window"])
+        var isDir: ObjCBool = false
+        if FileManager.default.fileExists(atPath: path, isDirectory: &isDir) {
+            if isDir.boolValue {
+                openTerminal(path)
+            } else {
+                openDir(path)
+            }
+        } else {
+            print("Path doesn't exist")
+        }
+    } else {
+        print("Path doesn't exist")
     }
 }
 
